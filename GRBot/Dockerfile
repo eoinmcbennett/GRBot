@@ -3,7 +3,8 @@ WORKDIR /app
 
 COPY *.csproj ./
 COPY NuGet.Config ./
-RUN dotnet restore
+RUN nuget.exe restore MessageProcessor.csproj -SolutionDirectory ../ -Verbosity normal
+RUN MSBuild.exe MessageProcessor.csproj /t:build /p:Configuration=Release /p:OutputPath=./out
 
 COPY . ./
 RUN dotnet publish -c Release -o out
@@ -14,4 +15,3 @@ COPY --from=build-env /app/out .
 
 COPY config.txt ./
 ENTRYPOINT ["dotnet", "GRBot.dll"]
-
