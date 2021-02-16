@@ -12,6 +12,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-COPY config.txt ./
+COPY config.txt /app/
 ENTRYPOINT ["dotnet", "GRBot.dll"]
 
